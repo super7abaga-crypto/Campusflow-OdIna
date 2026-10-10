@@ -1,89 +1,41 @@
-PR TITLE: feat: Implement ticket workflow and reports 
+Title: Implement ticket workflow and reports
+Merged: 2026-10-09 at 13:40:52Z (21 hours ago)
+Author: juinalegwu (collaborator)
+Link: https://github.com/super7abaga-crypto/Campusflow-OdIna/pull/5
 
-Related Issue: Closes #<0> 
+Purpose: Add comprehensive documentation and team guidance to support the ticket management system. Establish best practices, workflow patterns, and a shared learning log for engineers collaborating on the project.
 
-WHAT CHANGED? 
+Key changes made:
 
-    Added ticket assignment functionality in campusflow/workflow.py. 
+    Enhanced README.md (90 additions, 1 deletion)
+        Complete project overview and feature list
+        Requirements (Python 3.10+)
+        Instructions to run the program and tests
+        Detailed description of all ticket fields (id, title, category, urgency, affected_users, priority, status, assigned_to)
+        Documented priority calculation rules with the 4-level evaluation order
+        Suggested team workflow for code reviews and collaboration
+        Full project structure diagram
 
-    Added ticket status update functionality. 
+    Added docs/design-decisions.md (35 additions)
+        Five key architectural decisions documented:
+            Ticket collection stored as Python list of dicts
+            Error handling strategy with ValueError exceptions
+            Function return values and contract definitions
+            JSON persistence ownership and file handling
+            Automated testing framework approach using unittest
 
-    Added validation for ticket IDs when assigning or updating tickets. 
+    Added docs/ai-learning-log.md (34 additions)
+        Template for team to record learning sessions
+        6 suggested discussion topics for the team to explore together:
+            Input validation importance
+            if/elif rule ordering in priority logic
+            Difference between return vs print()
+            Why workflow functions should be separate from CLI
+            JSON file error handling
+            Concurrency/race condition concerns
+        Reflection section for post-review team documentation
 
-    Added validation for assignee names. 
+    Added data/.gitkeep
+        Empty placeholder file to ensure the data directory exists in Git while keeping it clean
 
-    Added allowed ticket statuses: open, in_progress, resolved, and closed. 
-
-    Prevented invalid status values from being applied to tickets. 
-
-    Added unit tests in tests/test_workflow.py covering ticket assignment and status updates. 
-
-HOW DOES IT WORK? 
-
-    The workflow functions search the existing ticket list using the ticket ID. 
-
-    When a valid ticket is found, an engineer can be assigned to it using assign_ticket(). 
-
-    The assigned engineer's name is stored in the ticket's assigned_to field. 
-
-    Ticket status can be changed using update_ticket_status(). 
-
-    Only the allowed workflow statuses are accepted. 
-
-    If the ticket ID does not exist or the input is invalid, a ValueError is raised instead of changing the ticket. 
-
-    The workflow logic is kept separate from main.py so the command-line interface only collects user input and calls the appropriate functions. 
-
-HOW DID I TEST IT? 
-
-    Command: python -m unittest discover -s tests -v 
-
-    Actual result: All relevant workflow tests passed. 
-
-    Edge cases verified: 
-
-    Assigning an existing ticket to an engineer. 
-
-    Updating an existing ticket to a valid status. 
-
-    Using an invalid ticket ID. 
-
-    Using an invalid or empty assignee name. 
-
-    Using an unsupported ticket status. 
-
-    Confirming that the ticket's assigned_to value changes correctly. 
-
-    Confirming that the ticket's status changes only when a valid status is provided. 
-
-    Confirming that invalid operations raise ValueError instead of silently changing the ticket. 
-
-WHAT DID I LEARN WITH AI? 
-
-    Concept: Python workflow logic, searching lists of dictionaries, validation, exception handling, and separating business logic from the command-line interface. 
-
-    My verification: I tested assigning engineers to existing tickets and changing ticket statuses. I also tested invalid ticket IDs and unsupported statuses to make sure the functions rejected bad input. 
-
-    Changed/rejected advice: I used AI explanations to understand how the workflow functions should behave, but verified the behaviour through the project's unit tests and adjusted the implementation to match the project's actual requirements. 
-
-REVIEWER NOTES 
-
-    Please check that ticket assignment only changes the intended ticket. 
-
-    Please review the validation of ticket IDs and assignee names. 
-
-    Please check that only the four supported statuses can be applied: open, in_progress, resolved, and closed. 
-
-    Please verify that invalid workflow operations raise an error without modifying the ticket. 
-
-    Please review whether the workflow tests cover the important invalid-input cases. 
-
-KNOWN LIMITATIONS 
-
-    The current workflow does not include authentication or permission checks for who is allowed to assign or update tickets. 
-
-    Ticket assignment currently stores the engineer's name rather than linking to a separate engineer/user record. 
-
-    The workflow operates on the in-memory ticket list; persistent saving is handled separately by the storage module. 
-
-    More advanced workflow rules, such as preventing certain status transitions, can be added later. 
+In summary, PR #5 provides the foundational documentation and team collaboration guidelines for the Campusflow-OdIna project, complementing the code from PR #4 with educational materials and design rationale.
